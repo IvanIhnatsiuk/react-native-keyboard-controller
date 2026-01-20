@@ -16,7 +16,7 @@ Control each frame of keyboard movement in react native
 
 - [KeyboardAvoidingView](/docs/api/components/keyboard-avoiding-view.md): This component will automatically adjust its height, position, or bottom padding based on the keyboard height to remain visible while the virtual keyboard is displayed.
 - [KeyboardAwareScrollView](/docs/api/components/keyboard-aware-scroll-view.md): <Lottie
-- [KeyboardStickyView](/docs/api/components/keyboard-sticky-view.md): A KeyboardStickyView component seamlessly ensures that a designated view sticks to the keyboard's movements, maintaining visibility and interaction. Use it when you want to enhance the user experience by preventing important UI elements from being obscured by the keyboard, creating a smooth and user-friendly interface in your React Native application.
+- [KeyboardStickyView](/docs/api/components/keyboard-sticky-view.md): A KeyboardStickyView component seamlessly ensures that a designated view sticks to the keyboard's movements, maintaining visibility and interaction. Often referred to as a keyboard accessory or keyboard accessory view, it helps you enhance the user experience by preventing important UI elements from being obscured by the keyboard, creating a smooth and user-friendly interface in your React Native application.
 - [KeyboardToolbar](/docs/api/components/keyboard-toolbar.md): KeyboardToolbar is a view that sticky to the keyboard and has next and previous buttons for switching between inputs as well as Done button for closing the keyboard.
 - [useFocusedInputHandler](/docs/api/hooks/input/use-focused-input-handler.md): useFocusedInputHandler is a hook that allows to intercept events from a focused TextInput.
 - [useReanimatedFocusedInput](/docs/api/hooks/input/use-reanimated-focused-input.md): Hook that returns an information about TextInput that currently has a focus. Returns null if no input has focus.
@@ -26,14 +26,19 @@ Control each frame of keyboard movement in react native
 - [useReanimatedKeyboardAnimation](/docs/api/hooks/keyboard/use-reanimated-keyboard-animation.md): useReanimatedKeyboardAnimation is a hook which gives access to two reanimated values:
 - [useKeyboardController](/docs/api/hooks/module/use-keyboard-controller.md): useKeyboardController is a hook which gives an access to the state of the react-native-keyboard-controller library. It return two values:
 - [KeyboardController](/docs/api/keyboard-controller.md): The KeyboardController module in React Native provides a convenient set of methods for managing the behavior of the keyboard. With seamless runtime adjustments, this module allows developers to dynamically change the windowSoftInputMode on Android and dismiss the keyboard on both platforms.
-- [KeyboardControllerView](/docs/api/keyboard-controller-view.md): A plain react-native View with some additional methods and props. Used internally in KeyboardProvider
 - [KeyboardEvents](/docs/api/keyboard-events.md): This library exposes 4 events which are available on all platforms:
-- [KeyboardGestureArea](/docs/api/keyboard-gesture-area.md): KeyboardGestureArea allows you to define a region on the screen, where gestures will control the keyboard position.
 - [KeyboardProvider](/docs/api/keyboard-provider.md): KeyboardProvider should wrap your app. Under the hood it works with KeyboardControllerView to receive events during keyboard movements, maps these events to Animated/Reanimated values and store them in context.
-- [OverKeyboardView](/docs/api/over-keyboard-view.md): Display views over keyboard without closing it.
+- [KeyboardBackgroundView](/docs/api/views/keyboard-background-view.md): View that matches keyboard background
+- [KeyboardControllerView](/docs/api/views/keyboard-controller-view.md): A plain react-native View with some additional methods and props. Used internally in KeyboardProvider
+- [KeyboardExtender](/docs/api/views/keyboard-extender.md): Display views inside the keyboard
+- [KeyboardGestureArea](/docs/api/views/keyboard-gesture-area.md): View for gestures that will control keyboard position
+- [OverKeyboardView](/docs/api/views/over-keyboard-view.md): Display views over keyboard without closing it.
 
 #### category
 
+- [📚 Components](/docs/category/-components.md): A set of JS components that simplify keyboard management and user interaction handling
+- [🎣 Hooks](/docs/category/-hooks.md): React hooks provided by this library
+- [✨ Views](/docs/category/-views.md): Native views provided by this library
 - [API Reference](/docs/category/api-reference.md): API reference containing information about all public methods and their signatures
 - [Guides](/docs/category/guides.md): Most useful topics to start quickly.
 - [Recipes](/docs/category/recipes.md)
@@ -74,10 +79,6 @@ Troubleshooting guide
 ---
 
 # Full Documentation Content
-
-## KeyboardAvoidingView
-
-> This component will automatically adjust its height, position, or bottom padding based on the keyboard height to remain visible while the virtual keyboard is displayed.
 
 # KeyboardAvoidingView
 
@@ -253,10 +254,6 @@ Since `StatusBar.currentHeight` is an **Android-only** property, using `?? 0` en
 
 ---
 
-## KeyboardAwareScrollView
-
-> <Lottie
-
 # KeyboardAwareScrollView
 
 <!-- -->
@@ -311,7 +308,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 ### `bottomOffset`[​](/react-native-keyboard-controller/docs/api/components/keyboard-aware-scroll-view.md#bottomoffset "Direct link to bottomoffset")
 
-The distance between keyboard and focused `TextInput` when keyboard is shown. Default is `0`.
+The distance between the keyboard and the caret inside a focused `TextInput` when the keyboard is shown. Default is `0`.
 
 `react-native-keyboard-aware-scroll-view` equivalent
 
@@ -473,6 +470,14 @@ export function Example() {
 }
 ```
 
+## Methods[​](/react-native-keyboard-controller/docs/api/components/keyboard-aware-scroll-view.md#methods "Direct link to Methods")
+
+### `assureFocusedInputVisible`[​](/react-native-keyboard-controller/docs/api/components/keyboard-aware-scroll-view.md#assurefocusedinputvisible "Direct link to assurefocusedinputvisible")
+
+A method that assures that focused input is visible and not obscured by keyboard or other elements.
+
+You may want to call it, when layout inside `ScrollView` changes (for example validation message appears or disappears and it shifts position of focused input).
+
 ## Example[​](/react-native-keyboard-controller/docs/api/components/keyboard-aware-scroll-view.md#example "Direct link to Example")
 
 ```
@@ -547,13 +552,9 @@ const styles = StyleSheet.create({
 
 ---
 
-## KeyboardStickyView
-
-> A KeyboardStickyView component seamlessly ensures that a designated view sticks to the keyboard's movements, maintaining visibility and interaction. Use it when you want to enhance the user experience by preventing important UI elements from being obscured by the keyboard, creating a smooth and user-friendly interface in your React Native application.
-
 # KeyboardStickyView
 
-A `KeyboardStickyView` component seamlessly ensures that a designated view sticks to the keyboard's movements, maintaining visibility and interaction. Use it when you want to enhance the user experience by preventing important UI elements from being obscured by the keyboard, creating a smooth and user-friendly interface in your React Native application.
+A `KeyboardStickyView` component seamlessly ensures that a designated view sticks to the keyboard's movements, maintaining visibility and interaction. Often referred to as a **keyboard accessory** or **keyboard accessory view**, it helps you enhance the user experience by preventing important UI elements from being obscured by the keyboard, creating a smooth and user-friendly interface in your React Native application.
 
 `KeyboardAvoidingView` vs `KeyboardStickyView`
 
@@ -596,10 +597,6 @@ An object containing next properties:
 
 ---
 
-## KeyboardToolbar
-
-> KeyboardToolbar is a view that sticky to the keyboard and has next and previous buttons for switching between inputs as well as Done button for closing the keyboard.
-
 # KeyboardToolbar
 
 `KeyboardToolbar` is a view that sticky to the keyboard and has **next** and **previous** buttons for switching between inputs as well as **Done** button for closing the keyboard.
@@ -615,20 +612,60 @@ This component is fully customizable and allows you to define any behavior for p
 * **Extended accessibility support** 🔍: Ensures that all users, including those with disabilities, can navigate through inputs effectively.
 * **Full control over the buttons behavior** 🔧: Customize the actions triggered by the next, previous, and done buttons according to your needs.
 * **Extends ViewProps** 📜: Supports all the props that `View` component has.
+* **Compound component pattern** 🔌: Mix and match sub-components for granular control over the toolbar's structure.
 
-## Props[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#props "Direct link to Props")
+## Compound Components[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#compound-components "Direct link to Compound Components")
 
-### [`View Props`](https://reactnative.dev/docs/view#props)[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#view-props "Direct link to view-props")
+The new API uses sub-components as children of `KeyboardToolbar`. These allow for precise customization, such as conditional rendering of buttons or injecting custom elements.
 
-Inherits [View Props](https://reactnative.dev/docs/view#props).
+### `<KeyboardToolbar.Background>`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardtoolbarbackground "Direct link to keyboardtoolbarbackground")
 
-### [`KeyboardStickyViewProps`](/react-native-keyboard-controller/docs/api/components/keyboard-sticky-view.md)[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardstickyviewprops "Direct link to keyboardstickyviewprops")
+Renders a custom background (e.g., blur effect) that overlays the entire toolbar. Accepts any React node as children.
 
-Inherits [KeyboardStickyViewProps](/react-native-keyboard-controller/docs/api/components/keyboard-sticky-view.md).
+```
+import { Platform } from "react-native";
+import { KeyboardToolbar } from "react-native-keyboard-controller";
+import { BlurView } from "@react-native-community/blur";
 
-### `button`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#button "Direct link to button")
+<KeyboardToolbar opacity="4F">
+  <KeyboardToolbar.Background>
+    <BlurView
+      blurAmount={32}
+      blurType={Platform.OS === "ios" ? "chromeMaterial" : "light"}
+      reducedTransparencyFallbackColor="white"
+      style={{ position: "absolute", top: 0, left: 0, bottom: 0, right: 0 }}
+    />
+  </KeyboardToolbar.Background>
+  {/* Other sub-components */}
+</KeyboardToolbar>;
+```
 
-This property allows to render custom touchable component for next, previous and done button.
+warning
+
+Please, note, that you need to specify `opacity` prop for this prop to work. Because otherwise you will not see a blur effect.
+
+### `<KeyboardToolbar.Content>`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardtoolbarcontent "Direct link to keyboardtoolbarcontent")
+
+Renders a custom content (e.g., yours UI elements) in the middle of the toolbar. Accepts any React node as children.
+
+```
+import { KeyboardToolbar } from "react-native-keyboard-controller";
+
+<KeyboardToolbar>
+  <KeyboardToolbar.Content>
+    {showAutoFill ? (
+      <AutoFillContacts onContactSelected={onContactSelected} />
+    ) : null}
+  </KeyboardToolbar.Content>
+  {/* Other sub-components */}
+</KeyboardToolbar>;
+```
+
+### `<KeyboardToolbar.Prev>`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardtoolbarprev "Direct link to keyboardtoolbarprev")
+
+#### `button`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#button "Direct link to button")
+
+This property allows to render custom touchable component.
 
 ```
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -644,67 +681,14 @@ const CustomButton: KeyboardToolbarProps["button"] = ({
 
 // ...
 
-<KeyboardToolbar button={CustomButton} />;
+<KeyboardToolbar>
+  <KeyboardToolbar.Prev button={CustomButton} />
+</KeyboardToolbar>;
 ```
 
-### `blur`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#blur "Direct link to blur")
+#### `icon`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#icon "Direct link to icon")
 
-This property allows to render custom blur effect for the toolbar (by default iOS keyboard is opaque and it blurs the content underneath, so if you want to follow **HIG** ([*Human Interface Guidelines*](https://developer.apple.com/design/human-interface-guidelines/materials)) properly - consider to add this effect).
-
-By default it is `null` and will not render any blur effect, because it's not a responsibility of this library to provide a blur effect. Instead it provides a property where you can specify your own blur effect and its provider, i. e. `@react-native-community/blur`, `expo-blur` or maybe even `react-native-skia` (based on your project preferences of course).
-
-warning
-
-Please, note, that you need to specify `opacity` prop for this prop to work. Because otherwise you will not see a blur effect.
-
-```
-import { BlurView } from "@react-native-community/blur";
-import {
-  KeyboardToolbar,
-  KeyboardToolbarProps,
-} from "react-native-keyboard-controller";
-
-const CustomBlur: KeyboardToolbarProps["blur"] = ({ children }) => (
-  <BlurView
-    blurType="chromeMaterial"
-    blurAmount={10}
-    reducedTransparencyFallbackColor="white"
-    style={{ position: "absolute", top: 0, left: 0, bottom: 0, right: 0 }}
-  >
-    {children}
-  </BlurView>
-);
-
-// ...
-
-<KeyboardToolbar blur={CustomBlur} opacity="4F" />;
-```
-
-### `content`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#content "Direct link to content")
-
-This property allows you to show a custom content in the middle of the toolbar. It accepts JSX element. Default value is `null`.
-
-```
-<KeyboardToolbar
-  content={
-    showAutoFill ? (
-      <AutoFillContacts onContactSelected={onContactSelected} />
-    ) : null
-  }
-/>
-```
-
-### `doneText`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#donetext "Direct link to donetext")
-
-The property that allows to specify custom text for `Done` button.
-
-```
-<KeyboardToolbar doneText="Close" />
-```
-
-### `icon`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#icon "Direct link to icon")
-
-`icon` property allows to render custom icons for prev and next buttons.
+`icon` property allows to render custom icons.
 
 ```
 import { Text } from "react-native";
@@ -719,90 +703,12 @@ const Icon: KeyboardToolbarProps["icon"] = ({ type }) => {
 
 // ...
 
-<KeyboardToolbar icon={Icon} />;
+<KeyboardToolbar>
+  <KeyboardToolbar.Prev icon={Icon} />
+</KeyboardToolbar>;
 ```
 
-### `insets`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#insets "Direct link to insets")
-
-An object containing `left` and `right` properties that define the `KeyboardToolbar` padding. This helps prevent overlap with system UI elements, especially in landscape orientation:
-
-```
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-// ...
-
-const insets = useSafeAreaInsets();
-
-<KeyboardToolbar insets={insets} />;
-```
-
-### `onDoneCallback`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#ondonecallback "Direct link to ondonecallback")
-
-A callback that is called when the user presses the **done** button. The callback receives an instance of `GestureResponderEvent` which can be used to cancel the default action (for advanced use-cases).
-
-```
-import { Platform } from "react-native";
-import { KeyboardToolbar } from "react-native-keyboard-controller";
-import { trigger } from "react-native-haptic-feedback";
-
-const options = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
-};
-const haptic = () =>
-  trigger(Platform.OS === "ios" ? "impactLight" : "keyboardTap", options);
-
-// ...
-
-<KeyboardToolbar onDoneCallback={haptic} />;
-```
-
-Prevent Default Action
-
-To prevent the default action, call `e.preventDefault()` inside the callback:
-
-```
-<KeyboardToolbar
-  onDoneCallback={(e) => {
-    e.preventDefault(); // keyboard will not be dismissed, since we cancelled the default action
-  }}
-/>
-```
-
-### `onNextCallback`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#onnextcallback "Direct link to onnextcallback")
-
-A callback that is called when the user presses the **next** button. The callback receives an instance of `GestureResponderEvent` which can be used to cancel the default action (for advanced use-cases).
-
-```
-import { Platform } from "react-native";
-import { KeyboardToolbar } from "react-native-keyboard-controller";
-import { trigger } from "react-native-haptic-feedback";
-
-const options = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
-};
-const haptic = () =>
-  trigger(Platform.OS === "ios" ? "impactLight" : "keyboardTap", options);
-
-// ...
-
-<KeyboardToolbar onNextCallback={haptic} />;
-```
-
-Prevent Default Action
-
-To prevent the default action, call `e.preventDefault()` inside the callback:
-
-```
-<KeyboardToolbar
-  onNextCallback={(e) => {
-    e.preventDefault(); // the focus will not be moved to the next input
-  }}
-/>
-```
-
-### `onPrevCallback`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#onprevcallback "Direct link to onprevcallback")
+#### `onPress`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#onpress "Direct link to onpress")
 
 A callback that is called when the user presses the **previous** button. The callback receives an instance of `GestureResponderEvent` which can be used to cancel the default action (for advanced use-cases).
 
@@ -820,7 +726,9 @@ const haptic = () =>
 
 // ...
 
-<KeyboardToolbar onPrevCallback={haptic} />;
+<KeyboardToolbar>
+  <KeyboardToolbar.Prev onPress={haptic} />
+</KeyboardToolbar>;
 ```
 
 Prevent Default Action
@@ -828,11 +736,196 @@ Prevent Default Action
 To prevent the default action, call `e.preventDefault()` inside the callback:
 
 ```
-<KeyboardToolbar
-  onPrevCallback={(e) => {
-    e.preventDefault(); // the focus will not be moved to the prev input
-  }}
-/>
+<KeyboardToolbar>
+  <KeyboardToolbar.Prev
+    onPress={(e) => {
+      // the focus will not be moved to the prev input
+      e.preventDefault();
+    }}
+  />
+</KeyboardToolbar>
+```
+
+### `<KeyboardToolbar.Next>`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardtoolbarnext "Direct link to keyboardtoolbarnext")
+
+#### `button`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#button-1 "Direct link to button-1")
+
+This property allows to render custom touchable component.
+
+```
+import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  KeyboardToolbar,
+  KeyboardToolbarProps,
+} from "react-native-keyboard-controller";
+
+const CustomButton: KeyboardToolbarProps["button"] = ({
+  children,
+  onPress,
+}) => <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>;
+
+// ...
+
+<KeyboardToolbar>
+  <KeyboardToolbar.Next button={CustomButton} />
+</KeyboardToolbar>;
+```
+
+#### `icon`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#icon-1 "Direct link to icon-1")
+
+`icon` property allows to render custom icons.
+
+```
+import { Text } from "react-native";
+import {
+  KeyboardToolbar,
+  KeyboardToolbarProps,
+} from "react-native-keyboard-controller";
+
+const Icon: KeyboardToolbarProps["icon"] = ({ type }) => {
+  return <Text>{type === "next" ? "⬇️" : "⬆️"}</Text>;
+};
+
+// ...
+
+<KeyboardToolbar>
+  <KeyboardToolbar.Next icon={Icon} />
+</KeyboardToolbar>;
+```
+
+#### `onPress`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#onpress-1 "Direct link to onpress-1")
+
+A callback that is called when the user presses the **next** button. The callback receives an instance of `GestureResponderEvent` which can be used to cancel the default action (for advanced use-cases).
+
+```
+import { Platform } from "react-native";
+import { KeyboardToolbar } from "react-native-keyboard-controller";
+import { trigger } from "react-native-haptic-feedback";
+
+const options = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: false,
+};
+const haptic = () =>
+  trigger(Platform.OS === "ios" ? "impactLight" : "keyboardTap", options);
+
+// ...
+
+<KeyboardToolbar>
+  <KeyboardToolbar.Next onPress={haptic} />
+</KeyboardToolbar>;
+```
+
+Prevent Default Action
+
+To prevent the default action, call `e.preventDefault()` inside the callback:
+
+```
+<KeyboardToolbar>
+  <KeyboardToolbar.Next
+    onPress={(e) => {
+      // the focus will not be moved to the next input
+      e.preventDefault();
+    }}
+  />
+</KeyboardToolbar>
+```
+
+### `<KeyboardToolbar.Done>`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardtoolbardone "Direct link to keyboardtoolbardone")
+
+#### `button`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#button-2 "Direct link to button-2")
+
+This property allows to render custom touchable component.
+
+```
+import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  KeyboardToolbar,
+  KeyboardToolbarProps,
+} from "react-native-keyboard-controller";
+
+const CustomButton: KeyboardToolbarProps["button"] = ({
+  children,
+  onPress,
+}) => <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>;
+
+// ...
+
+<KeyboardToolbar>
+  <KeyboardToolbar.Next button={CustomButton} />
+</KeyboardToolbar>;
+```
+
+#### `onPress`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#onpress-2 "Direct link to onpress-2")
+
+A callback that is called when the user presses the **done** button. The callback receives an instance of `GestureResponderEvent` which can be used to cancel the default action (for advanced use-cases).
+
+```
+import { Platform } from "react-native";
+import { KeyboardToolbar } from "react-native-keyboard-controller";
+import { trigger } from "react-native-haptic-feedback";
+
+const options = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: false,
+};
+const haptic = () =>
+  trigger(Platform.OS === "ios" ? "impactLight" : "keyboardTap", options);
+
+// ...
+
+<KeyboardToolbar>
+  <KeyboardToolbar.Done onPress={haptic} />
+</KeyboardToolbar>;
+```
+
+Prevent Default Action
+
+To prevent the default action, call `e.preventDefault()` inside the callback:
+
+```
+<KeyboardToolbar>
+  <KeyboardToolbar.Done
+    onPress={(e) => {
+      // keyboard will not be dismissed, since we cancelled the default action
+      e.preventDefault();
+    }}
+  />
+</KeyboardToolbar>
+```
+
+#### `text`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#text "Direct link to text")
+
+The property that allows to specify custom text for `Done` button.
+
+```
+<KeyboardToolbar>
+  <KeyboardToolbar.Done text="Close" />
+</KeyboardToolbar>
+```
+
+## Props[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#props "Direct link to Props")
+
+### [`View Props`](https://reactnative.dev/docs/view#props)[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#view-props "Direct link to view-props")
+
+Inherits [View Props](https://reactnative.dev/docs/view#props).
+
+### [`KeyboardStickyViewProps`](/react-native-keyboard-controller/docs/api/components/keyboard-sticky-view.md)[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardstickyviewprops "Direct link to keyboardstickyviewprops")
+
+Inherits [KeyboardStickyViewProps](/react-native-keyboard-controller/docs/api/components/keyboard-sticky-view.md).
+
+### `insets`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#insets "Direct link to insets")
+
+An object containing `left` and `right` properties that define the `KeyboardToolbar` padding. This helps prevent overlap with system UI elements, especially in landscape orientation:
+
+```
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+// ...
+
+const insets = useSafeAreaInsets();
+
+<KeyboardToolbar insets={insets} />;
 ```
 
 ### `opacity`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#opacity "Direct link to opacity")
@@ -842,10 +935,6 @@ This property allows to specify the opacity of the toolbar container. The value 
 ```
 <KeyboardToolbar opacity="EE" />
 ```
-
-### `showArrows`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#showarrows "Direct link to showarrows")
-
-A boolean prop indicating whether to show `next` and `prev` buttons. Can be useful to set it to `false` if you have only one input and want to show only `Done` button. Default to `true`.
 
 ### `theme`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#theme "Direct link to theme")
 
@@ -920,7 +1009,11 @@ export default function ToolbarExample() {
         <TextInput placeholder="House number" title="House" />
         <TextInput placeholder="Flat number" title="Flat" />
       </KeyboardAwareScrollView>
-      <KeyboardToolbar />
+      <KeyboardToolbar>
+        <KeyboardToolbar.Prev />
+        <KeyboardToolbar.Next />
+        <KeyboardToolbar.Done />
+      </KeyboardToolbar>
     </>
   );
 }
@@ -1019,6 +1112,77 @@ More comprehensive usage
 
 For more comprehensive usage that covers more complex interactions please check [example](https://github.com/kirillzyusko/react-native-keyboard-controller/tree/main/example) app.
 
+## Migration to compound component[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#migration-to-compound-component "Direct link to Migration to compound component")
+
+To migrate from the legacy prop-based API to the compound API:
+
+1. Add elements that you want to render in the toolbar (e.g., `Prev`, `Next`, `Done`, `Content`, `Background`).
+
+```
+// Old:
+<KeyboardToolbar />
+
+// New:
+<KeyboardToolbar>
+  <KeyboardToolbar.Prev />
+  <KeyboardToolbar.Next />
+  <KeyboardToolbar.Done />
+</KeyboardToolbar>
+```
+
+2. Move props like `content`, `blur`, `doneText` into dedicated sub-components:
+
+```
+// Old:
+<KeyboardToolbar content={<AutoFillContacts />} blur={<BlurView />} doneText="Close" />
+
+// New:
+<KeyboardToolbar>
+  <KeyboardToolbar.Background>
+    <BlurView />
+  </KeyboardToolbar.Background>
+  <KeyboardToolbar.Content>
+    <AutoFillContacts />
+  </KeyboardToolbar.Content>
+  <KeyboardToolbar.Done text="Close" />
+</KeyboardToolbar>
+```
+
+3. If you used button callbacks, move them into dedicated sub-components:
+
+```
+// Old:
+<KeyboardToolbar
+  onNextCallback={haptic}
+  onPrevCallback={haptic}
+  onDoneCallback={haptic}
+/>
+
+// New:
+<KeyboardToolbar>
+  <KeyboardToolbar.Next onPress={haptic} />
+  <KeyboardToolbar.Prev onPress={haptic} />
+  <KeyboardToolbar.Done onPress={haptic} />
+</KeyboardToolbar>
+```
+
+4. If you used `showArrows` prop, move it into conditional rendering:
+
+```
+// Old:
+<KeyboardToolbar showArrows={false} />
+
+// New:
+<KeyboardToolbar>
+  {showArrows ? <KeyboardToolbar.Prev /> : null}
+  {showArrows ? <KeyboardToolbar.Next /> : null}
+</KeyboardToolbar>
+```
+
+Struggle to migrate?
+
+If you found any bugs or inconsistent behavior comparing to old implementation and can not migrate to new compound API - don't hesitate to open an [issue](https://github.com/kirillzyusko/react-native-keyboard-controller/issues/new?assignees=kirillzyusko\&labels=bug\&template=bug_report.md\&title=). It will help the project 🙏
+
 ## Limitations[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#limitations "Direct link to Limitations")
 
 * By default `TextInput` search happens within `UIViewController`/`FragmentActivity` (current screen if you are using `react-native-screens`)
@@ -1026,10 +1190,6 @@ For more comprehensive usage that covers more complex interactions please check 
 
 
 ---
-
-## useFocusedInputHandler
-
-> useFocusedInputHandler is a hook that allows to intercept events from a focused TextInput.
 
 # useFocusedInputHandler
 
@@ -1101,10 +1261,6 @@ This handler can be handy when you need to have an access to input on a global l
 
 ---
 
-## useReanimatedFocusedInput
-
-> Hook that returns an information about TextInput that currently has a focus. Returns null if no input has focus.
-
 # useReanimatedFocusedInput
 
 Hook that returns an information about `TextInput` that currently has a focus. Returns `null` if no input has focus.
@@ -1121,7 +1277,9 @@ Events order
 
 The value from `useReanimatedFocusedInput` will be always updated before keyboard events, so you can safely read values in `onStart` handler and be sure they are up-to-date.
 
-## Event structure[​](/react-native-keyboard-controller/docs/api/hooks/input/use-reanimated-focused-input.md#event-structure "Direct link to Event structure")
+## Returned values[​](/react-native-keyboard-controller/docs/api/hooks/input/use-reanimated-focused-input.md#returned-values "Direct link to Returned values")
+
+### `input`[​](/react-native-keyboard-controller/docs/api/hooks/input/use-reanimated-focused-input.md#input "Direct link to input")
 
 The `input` property from this hook is returned as `SharedValue`. The returned data has next structure:
 
@@ -1142,20 +1300,20 @@ type FocusedInputLayoutChangedEvent = {
 };
 ```
 
+### `update`[​](/react-native-keyboard-controller/docs/api/hooks/input/use-reanimated-focused-input.md#update "Direct link to update")
+
+To update the focused input, use `update` function. Thus you can query the position on demand from JS thread.
+
 ## Example[​](/react-native-keyboard-controller/docs/api/hooks/input/use-reanimated-focused-input.md#example "Direct link to Example")
 
 ```
-const { input } = useReanimatedFocusedInput();
+const { input, update } = useReanimatedFocusedInput();
 ```
 
 Also have a look on [example](https://github.com/kirillzyusko/react-native-keyboard-controller/tree/main/example) app for more comprehensive usage.
 
 
 ---
-
-## useKeyboardAnimation
-
-> useKeyboardAnimation is a hook which gives access to two animated values:
 
 # useKeyboardAnimation
 
@@ -1210,10 +1368,6 @@ class KeyboardAnimation extends React.PureComponent {
 
 
 ---
-
-## useKeyboardHandler
-
-> useKeyboardHandler is a hook that offers low-level but more powerful API in comparison to useKeyboardAnimation. Using this hook you are getting an access to keyboard lifecycle events and you can easily determine the moment of the beginning animation, the end of the animation and get keyboard position in every frame of the animation.
 
 # useKeyboardHandler
 
@@ -1283,7 +1437,7 @@ useKeyboardHandler(
 );
 ```
 
-![](/react-native-keyboard-controller/assets/images/start-43926ae4afe7279da4f2fdd3d25603c6.png)
+![](/react-native-keyboard-controller/assets/images/start-305c203ddbdc76ff90b5615908259a9e.png)
 
 ```
 useKeyboardHandler(
@@ -1316,7 +1470,7 @@ useKeyboardHandler(
 );
 ```
 
-![](/react-native-keyboard-controller/assets/images/move-67a142f62e5e7286e45c5e964d03b862.png)
+![](/react-native-keyboard-controller/assets/images/move-399f00093385ef653ca2bf8b5b3904ff.png)
 
 ```
 useKeyboardHandler(
@@ -1352,7 +1506,7 @@ useKeyboardHandler(
 );
 ```
 
-![](/react-native-keyboard-controller/assets/images/interactive-5613a4e3be3e96ff53479d7d9ab342c4.png)
+![](/react-native-keyboard-controller/assets/images/interactive-4d1b89d0c133111eb4d18a2e7ffeab9b.png)
 
 ```
 useKeyboardHandler(
@@ -1369,7 +1523,7 @@ useKeyboardHandler(
 
 Event availability
 
-This event is available only on Android >= 11. To receive it you need to use [KeyboardGestureArea](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md).
+This event is available only on Android >= 11. To receive it you need to use [KeyboardGestureArea](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md).
 
 On iOS you need to specify `keyboardDismissMode="interactive"` on your `ScrollView`.
 
@@ -1392,7 +1546,7 @@ useKeyboardHandler(
 );
 ```
 
-![](/react-native-keyboard-controller/assets/images/end-51c1da133c9105d1711f5472ef02f7dc.png)
+![](/react-native-keyboard-controller/assets/images/end-59a0fe1530f5a2d63d2c744b86e87ffe.png)
 
 ```
 useKeyboardHandler(
@@ -1410,55 +1564,25 @@ useKeyboardHandler(
 
 ---
 
-## useKeyboardState
-
-> useKeyboardState is a hook which gives an access to current keyboard state. This hook combines data from KeyboardController.state() and KeyboardController.isVisible() methods and makes it reactive (i. e. triggers a re-render when keyboard state/visibility has changed).
-
 # useKeyboardState
 
 `useKeyboardState` is a hook which gives an access to current keyboard state. This hook combines data from `KeyboardController.state()` and `KeyboardController.isVisible()` methods and makes it reactive (i. e. triggers a re-render when keyboard state/visibility has changed).
 
 warning
 
-Use this hook only when you need to control `props` of views returned in JSX-markup. If you need to access the keyboard `state` in callbacks or event handlers then consider to use [KeyboardController.state()](/react-native-keyboard-controller/docs/api/keyboard-controller.md#state) or [KeyboardController.isVisible()](/react-native-keyboard-controller/docs/api/keyboard-controller.md#isvisible) methods instead. This allows you to retrieve values as needed without triggering unnecessary re-renders.
-
-✅ Recommended 👍
-
-```
-// use KeyboardController.isVisible()
-
-<Button
-  onPress={() => {
-    // read value on demand
-    if (KeyboardController.isVisible()) {
-      // ...
-    }
-  }}
->
-  Go to Next Page
-</Button>
-```
-
-❌ Not recommended 🙅‍♂️
-
-```
-const { isVisible } = useKeyboardState();
-
-<Button
-  onPress={() => {
-    // don't consume state from hook
-    if (isVisible) {
-      // ...
-    }
-  }}
->
-  Go to next Page
-</Button>;
-```
+Don’t use `state` from `useKeyboardState` inside event handlers. It will cause unnecessary re-renders. See [common pitfalls](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-state.md#-common-pitfalls) section for more details and alternatives.
 
 tip
 
-Also make sure that if you need to change style based on keyboard presence then you are using corresponding [animated](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-animation.md) hooks to offload animation to a native thread and free up resources for JS thread.
+Make sure that if you want to animate something based on keyboard presence then you've seen [optimize animation](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-state.md#%EF%B8%8F-optimize-animations-with-native-threads) section.
+
+`useKeyboardState` allows you to pass a **selector** function to pick only the necessary part of the keyboard state data. This is a powerful technique to prevent unnecessary re-renders of your component when only a specific property of the keyboard state changes.
+
+```
+const appearance = useKeyboardState((state) => state.appearance);
+```
+
+In this example, your component will only re-render when the `appearance` property of the `KeyboardState` changes, rather than for any change in the entire state object.
 
 ## Data structure[​](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-state.md#data-structure "Direct link to Data structure")
 
@@ -1476,6 +1600,85 @@ type KeyboardState = {
 };
 ```
 
+## 🚫 Common Pitfalls[​](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-state.md#-common-pitfalls "Direct link to 🚫 Common Pitfalls")
+
+### ⚠️ Avoid Unnecessary Re-renders[​](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-state.md#️-avoid-unnecessary-re-renders "Direct link to ⚠️ Avoid Unnecessary Re-renders")
+
+If you need to access the keyboard `state` in callbacks or event handlers then consider to use [KeyboardController.state()](/react-native-keyboard-controller/docs/api/keyboard-controller.md#state) or [KeyboardController.isVisible()](/react-native-keyboard-controller/docs/api/keyboard-controller.md#isvisible) methods instead. This allows you to retrieve values as needed without triggering unnecessary re-renders.
+
+✅ Recommended 👍
+
+```
+// use KeyboardController.isVisible()
+
+<Button
+  onPress={() => {
+    // ✅ read value on demand
+    if (KeyboardController.isVisible()) {
+      // ...
+    }
+  }}
+>
+  Go to Next Page
+</Button>
+```
+
+❌ Not recommended 🙅‍♂️
+
+```
+const { isVisible } = useKeyboardState();
+
+<Button
+  onPress={() => {
+    // ❌ don't consume state from hook
+    if (isVisible) {
+      // ...
+    }
+  }}
+>
+  Go to next Page
+</Button>;
+```
+
+### ⚡️ Optimize Animations with Native Threads[​](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-state.md#️-optimize-animations-with-native-threads "Direct link to ⚡️ Optimize Animations with Native Threads")
+
+Don't use `useKeyboardState` for controlling styles, because:
+
+* applying it directly to styles can lead to choppy animations;
+* it changes its values frequently making excessive re-renders on each keyboard state change.
+
+If you need to change styles then you can use "animated" hooks such as [useKeyboardAnimation](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-animation.md), [useReanimatedKeyboardAnimation](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-reanimated-keyboard-animation.md) or even [useKeyboardHandler](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-handler.md) to offload animation to a native thread and free up resources for JS thread.
+
+✅ Recommended 👍
+
+```
+const { height } = useKeyboardAnimation();
+
+<Animated.View
+  style={{
+    width: "100%",
+    transform: [{ translateY: height }],
+  }}
+>
+  ...
+</Animated.View>;
+```
+
+❌ Not recommended 🙅‍♂️
+
+```
+const { height } = useKeyboardState();
+
+<View
+  style={{
+    width: "100%",
+    transform: [{ translateY: height }],
+  }}
+>
+  ...
+</View>;
+```
+
 ## Example[​](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-state.md#example "Direct link to Example")
 
 ```
@@ -1483,13 +1686,13 @@ import { View, Text, StyleSheet } from "react-native";
 import { useKeyboardState } from "react-native-keyboard-controller";
 
 const ShowcaseComponent = () => {
-  const { isVisible } = useKeyboardState();
+  const isVisible = useKeyboardState((state) => state.isVisible);
 
-  return (
-    <View style={isVisible ? styles.highlighted : null}>
+  return isVisible ? (
+    <View style={styles.highlighted}>
       <Text>Address form</Text>
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
@@ -1503,10 +1706,6 @@ Also have a look on [example](https://github.com/kirillzyusko/react-native-keybo
 
 
 ---
-
-## useReanimatedKeyboardAnimation
-
-> useReanimatedKeyboardAnimation is a hook which gives access to two reanimated values:
 
 # useReanimatedKeyboardAnimation
 
@@ -1562,10 +1761,6 @@ class KeyboardAnimation extends React.PureComponent {
 
 ---
 
-## useKeyboardController
-
-> useKeyboardController is a hook which gives an access to the state of the react-native-keyboard-controller library. It return two values:
-
 # useKeyboardController
 
 `useKeyboardController` is a hook which gives an access to the state of the `react-native-keyboard-controller` library. It return two values:
@@ -1619,10 +1814,6 @@ class KeyboardAnimation extends React.PureComponent {
 
 ---
 
-## KeyboardController
-
-> The KeyboardController module in React Native provides a convenient set of methods for managing the behavior of the keyboard. With seamless runtime adjustments, this module allows developers to dynamically change the windowSoftInputMode on Android and dismiss the keyboard on both platforms.
-
 # KeyboardController
 
 The `KeyboardController` module in React Native provides a convenient set of methods for managing the behavior of the keyboard. With seamless runtime adjustments, this module allows developers to dynamically change the `windowSoftInputMode` on Android and dismiss the keyboard on both platforms.
@@ -1661,6 +1852,18 @@ This method is used to restore the default `windowSoftInputMode` (`softwareKeybo
 KeyboardController.setDefaultMode();
 ```
 
+### `preload`[​](/react-native-keyboard-controller/docs/api/keyboard-controller.md#preload- "Direct link to preload-")
+
+```
+static preload(): void;
+```
+
+This method preloads the keyboard to prevent noticeable delay when the user focuses the first input after launching the app.
+
+```
+KeyboardController.preload();
+```
+
 ### `dismiss`[​](/react-native-keyboard-controller/docs/api/keyboard-controller.md#dismiss "Direct link to dismiss")
 
 ```
@@ -1677,6 +1880,12 @@ If you want to hide a keyboard and keep focus then you can pass `keepFocus` opti
 
 ```
 await KeyboardController.dismiss({ keepFocus: true });
+```
+
+If you want to hide keyboard immediately (i. e. without animation), you can pass `animated` option:
+
+```
+await KeyboardController.dismiss({ animated: false });
 ```
 
 What is the difference comparing to `react-native` implementation?
@@ -1739,67 +1948,6 @@ KeyboardController.setFocusTo("next");
 
 ---
 
-## KeyboardControllerView
-
-> A plain react-native View with some additional methods and props. Used internally in KeyboardProvider
-
-# KeyboardControllerView
-
-A plain react-native `View` with some additional methods and props. Used internally in [KeyboardProvider](/react-native-keyboard-controller/docs/api/keyboard-provider.md)
-
-## Props[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#props "Direct link to Props")
-
-### `onKeyboardMoveStart`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#onkeyboardmovestart "Direct link to onkeyboardmovestart")
-
-A callback function which is fired when keyboard starts a transition from one to another state (from closed to open, for example).
-
-### `onKeyboardMove`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#onkeyboardmove "Direct link to onkeyboardmove")
-
-A callback function which is fired every time, when keyboard changes its position on the screen.
-
-### `onKeyboardMoveInteractive`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#onkeyboardmoveinteractive "Direct link to onkeyboardmoveinteractive")
-
-A callback function which is fired every time, when user drags keyboard.
-
-### `onKeyboardMoveEnd`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#onkeyboardmoveend "Direct link to onkeyboardmoveend")
-
-A callback function which is fired when keyboard finished a transition from one to another state (from closed to open, for example).
-
-### `onFocusedInputLayoutChanged`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#onfocusedinputlayoutchanged "Direct link to onfocusedinputlayoutchanged")
-
-A callback function which is fired when layout of focused input gets changed.
-
-### `onFocusedInputTextChanged`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#onfocusedinputtextchanged "Direct link to onfocusedinputtextchanged")
-
-A callback function which is fired every time when user changes a text (types/deletes symbols).
-
-### `onFocusedInputSelectionChanged`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#onfocusedinputselectionchanged "Direct link to onfocusedinputselectionchanged")
-
-A callback function which is fired when user selects text in focused input.
-
-### `statusBarTranslucent`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#statusbartranslucent- "Direct link to statusbartranslucent-")
-
-A boolean prop to indicate whether `StatusBar` should be translucent on `Android` or not.
-
-### `navigationBarTranslucent`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#navigationbartranslucent- "Direct link to navigationbartranslucent-")
-
-A boolean prop to indicate whether [NavigationBar](https://m2.material.io/design/platform-guidance/android-bars.html#android-navigation-bar) should be translucent on `Android` or not.
-
-### `preserveEdgeToEdge`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#preserveedgetoedge- "Direct link to preserveedgetoedge-")
-
-A boolean property indicating whether to keep [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) mode always enabled (even when you disable the module). This is useful if you are using an external library to enable it and don't want this library to disable it.
-
-### `enabled`[​](/react-native-keyboard-controller/docs/api/keyboard-controller-view.md#enabled "Direct link to enabled")
-
-A boolean prop indicating whether the view is active or not. If it's `true` then it moves application to [edge-to-edge](https://developer.android.com/training/gestures/edge-to-edge) mode on Android and setup keyboard callbacks. When `false` - moves app away from [edge-to-edge](https://developer.android.com/training/gestures/edge-to-edge) and removes keyboard listeners.
-
-
----
-
-## KeyboardEvents
-
-> This library exposes 4 events which are available on all platforms:
-
 # KeyboardEvents
 
 This library exposes 4 events which are available on all platforms:
@@ -1845,70 +1993,6 @@ Also have a look on [example](https://github.com/kirillzyusko/react-native-keybo
 
 ---
 
-## KeyboardGestureArea
-
-> KeyboardGestureArea allows you to define a region on the screen, where gestures will control the keyboard position.
-
-# KeyboardGestureArea
-
-`KeyboardGestureArea` allows you to define a region on the screen, where gestures will control the keyboard position.
-
-Platform availability
-
-This component is available only for Android >= 11. For Android < 11 it will render `React.Fragment`.
-
-## Props[​](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#props "Direct link to Props")
-
-### `offset`[​](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#offset "Direct link to offset")
-
-Extra distance to the keyboard. Default is `0`.
-
-### `interpolator`[​](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#interpolator- "Direct link to interpolator-")
-
-String with possible values `linear` and `ios`:
-
-* **ios** - interactive keyboard dismissing will work as in iOS: swipes in non-keyboard area will not affect keyboard positioning, but if your swipe touches keyboard - keyboard will follow finger position.
-* **linear** - gestures inside the component will linearly affect the position of the keyboard, i.e. if the user swipes down by 20 pixels, then the keyboard will also be moved down by 20 pixels, even if the gesture was not made over the keyboard area.
-
-### `showOnSwipeUp`[​](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#showonswipeup- "Direct link to showonswipeup-")
-
-A boolean prop which allows to customize interactive keyboard behavior. If set to `true` then it allows to show keyboard (if it's already closed) by swipe up gesture. `false` by default.
-
-### `enableSwipeToDismiss`[​](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#enableswipetodismiss- "Direct link to enableswipetodismiss-")
-
-A boolean prop which allows to customize interactive keyboard behavior. If set to `false`, then any gesture will not affect keyboard position if the keyboard is shown. `true` by default.
-
-### `textInputNativeID`[​](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#textinputnativeid- "Direct link to textinputnativeid-")
-
-A corresponding `nativeID` value from the associated `TextInput` (a string that links the `KeyboardGestureArea` to one or more `TextInput` components). This is **required on iOS** in order to apply the `offset` when the keyboard is shown. Only the currently focused `TextInput` with a matching `nativeID` will receive offset behavior:
-
-* To apply the offset behavior to **multiple inputs**, you must assign the same `nativeID` to each of them.
-* If no `textInputNativeID` is provided, `offset` behavior will not be applied.
-
-## Example[​](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#example "Direct link to Example")
-
-```
-<KeyboardGestureArea
-  interpolator="ios"
-  offset={50}
-  textInputNativeID="composer"
->
-  <ScrollView keyboardDismissMode="interactive">
-    {/* The other UI components of application in your tree */}
-  </ScrollView>
-  <TextInput nativeID="composer" />
-</KeyboardGestureArea>
-```
-
-To see full example, check out corresponding [ios](https://github.com/kirillzyusko/react-native-keyboard-controller/tree/main/example/src/screens/Examples/InteractiveKeyboardIOS/index.tsx) and [android](https://github.com/kirillzyusko/react-native-keyboard-controller/tree/main/example/src/screens/Examples/InteractiveKeyboard/index.tsx) examples.
-
-
----
-
-## KeyboardProvider
-
-> KeyboardProvider should wrap your app. Under the hood it works with KeyboardControllerView to receive events during keyboard movements, maps these events to Animated/Reanimated values and store them in context.
-
 # KeyboardProvider
 
 `KeyboardProvider` should wrap your app. Under the hood it works with `KeyboardControllerView` to receive events during keyboard movements, maps these events to `Animated`/`Reanimated` values and store them in `context`.
@@ -1935,6 +2019,18 @@ Good to know
 
 If you use [react-native-edge-to-edge](https://github.com/zoontek/react-native-edge-to-edge), then `statusBarTranslucent`, `navigationBarTranslucent` and `preserveEdgeToEdge` are automatically set to `true`, so you don't need to worry about them.
 
+### `preload`[​](/react-native-keyboard-controller/docs/api/keyboard-provider.md#preload- "Direct link to preload-")
+
+A boolean prop that determines whether to preload the keyboard to eliminate the initial focus lag (improve TTI). Defaults to `true`.
+
+Internally it calls imperative [`KeyboardController.preload()`](/react-native-keyboard-controller/docs/api/keyboard-controller.md#preload-) API.
+
+Opting out of preloading
+
+Set this to `false` if your app's initial screen doesn't include any inputs or if you prefer to control keyboard preloading manually.
+
+In general, this method is lightweight and safe to call on app start without any noticeable performance cost.
+
 ### `enabled`[​](/react-native-keyboard-controller/docs/api/keyboard-provider.md#enabled "Direct link to enabled")
 
 A boolean prop indicating whether the module is enabled. It indicate only initial state, i. e. if you try to change this prop after component mount it will not have any effect. To change the property in runtime use [useKeyboardController](/react-native-keyboard-controller/docs/api/hooks/module/use-keyboard-controller.md) hook and `setEnabled` method. Defaults to `true`.
@@ -1958,9 +2054,421 @@ const App = () => {
 
 ---
 
-## OverKeyboardView
+# KeyboardBackgroundView
 
-> Display views over keyboard without closing it.
+<!-- -->
+
+`KeyboardBackgroundView` is a visual-only utility that replicates the background of the system keyboard. It doesn't alter layout or position itself beneath the keyboard — it simply renders a view that seamlessly matches the keyboard’s appearance. By matching this color you can create the illusion that your UI and the keyboard share a single, continuous surface.
+
+Primary Use Case
+
+Use this component when you need your UI elements to appear visually connected to the keyboard - perfect for toolbars, input accessories, or panels that should feel like natural keyboard extensions.
+
+## Key Features[​](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md#key-features "Direct link to Key Features")
+
+* 🎨 **Background Color Matching**: Automatically aligns with system keyboard colors
+* 🖌️ **Visual Continuity**: Creates illusion of shared surfaces during transitions
+* ⚡ **Independent Operation**: Functions without requiring a KeyboardProvider
+
+## When to Use[​](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md#when-to-use "Direct link to When to Use")
+
+Use `KeyboardBackgroundView` when:
+
+* You want to **visually align your UI** with the keyboard’s background.
+* You’re implementing **shared element transitions** tied to keyboard state.
+* You need **a smooth visual bridge** between your layout and the system keyboard without interfering with keyboard positioning or layout logic.
+* You create **shared visual spaces**, ideal for scenarios like search inputs or context-sensitive panels that smoothly connect with keyboard appearance.
+* You **visually blend** your UI with the keyboard’s look.
+
+warning
+
+While this component works well in most scenarios, keyboard apps allow users to customize their background color. Since Android/iOS do not expose keyboard background APIs, an exact match isn't always guaranteed.
+
+## Props[​](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md#props "Direct link to Props")
+
+`KeyboardBackgroundView` forwards all [`View`](https://reactnative.dev/docs/view#props) props, so you can treat it like any standard React Native view.
+
+## Usage[​](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md#usage "Direct link to Usage")
+
+### Basic[​](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md#basic "Direct link to Basic")
+
+```
+import { KeyboardBackgroundView } from "react-native-keyboard-controller";
+
+export function KeyboardExtension() {
+  return <KeyboardBackgroundView style={{ height: 48 }} />;
+}
+```
+
+### Shared-surface transition (advanced)[​](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md#shared-surface-transition-advanced "Direct link to Shared-surface transition (advanced)")
+
+```
+import React from "react";
+import { TextInput, View } from "react-native";
+import {
+  KeyboardBackgroundView,
+  KeyboardStickyView,
+  useReanimatedKeyboardAnimation,
+} from "react-native-keyboard-controller";
+import Reanimated, {
+  interpolateColor,
+  useAnimatedStyle,
+} from "react-native-reanimated";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+
+const ReanimatedBackgroundView = Reanimated.createAnimatedComponent(
+  KeyboardBackgroundView,
+);
+const ReanimatedTextInput = Reanimated.createAnimatedComponent(TextInput);
+
+const KeyboardSharedTransitionExample = () => {
+  const { bottom } = useSafeAreaInsets();
+  const { progress } = useReanimatedKeyboardAnimation();
+
+  const opacity = useAnimatedStyle(
+    () => ({
+      height: 291 + 70,
+      opacity: progress.value,
+    }),
+    [],
+  );
+  const inputColor = useAnimatedStyle(
+    () => ({
+      backgroundColor: interpolateColor(
+        progress.value,
+        [0, 1],
+        ["#323232", "#474747"],
+      ),
+    }),
+    [],
+  );
+
+  return (
+    <SafeAreaView
+      style={{
+        backgroundColor: "#000000",
+        flex: 1,
+        justifyContent: "flex-end",
+      }}
+    >
+      <KeyboardStickyView offset={{ closed: 291, opened: 291 + bottom }}>
+        <ReanimatedBackgroundView style={opacity} />
+        <View
+          style={{
+            marginHorizontal: 30,
+            marginVertical: 16,
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+          }}
+        >
+          <ReanimatedTextInput
+            placeholder="127.0.0.1"
+            placeholderTextColor="#ececec"
+            style={[
+              {
+                width: "100%",
+                padding: 10,
+                borderRadius: 8,
+                textAlign: "center",
+              },
+              inputColor,
+            ]}
+          />
+        </View>
+      </KeyboardStickyView>
+    </SafeAreaView>
+  );
+};
+
+export default KeyboardSharedTransitionExample;
+```
+
+## See also[​](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md#see-also "Direct link to See also")
+
+* [`KeyboardStickyView`](/react-native-keyboard-controller/docs/api/components/keyboard-sticky-view.md) – affixes content to the keyboard’s frame.
+* [`useReanimatedKeyboardAnimation`](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-reanimated-keyboard-animation.md) – drive your own animations with native‑driven progress values.
+
+
+---
+
+# KeyboardControllerView
+
+A plain react-native `View` with some additional methods and props. Used internally in [KeyboardProvider](/react-native-keyboard-controller/docs/api/keyboard-provider.md)
+
+## Props[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#props "Direct link to Props")
+
+### `onKeyboardMoveStart`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#onkeyboardmovestart "Direct link to onkeyboardmovestart")
+
+A callback function which is fired when keyboard starts a transition from one to another state (from closed to open, for example).
+
+### `onKeyboardMove`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#onkeyboardmove "Direct link to onkeyboardmove")
+
+A callback function which is fired every time, when keyboard changes its position on the screen.
+
+### `onKeyboardMoveInteractive`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#onkeyboardmoveinteractive "Direct link to onkeyboardmoveinteractive")
+
+A callback function which is fired every time, when user drags keyboard.
+
+### `onKeyboardMoveEnd`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#onkeyboardmoveend "Direct link to onkeyboardmoveend")
+
+A callback function which is fired when keyboard finished a transition from one to another state (from closed to open, for example).
+
+### `onFocusedInputLayoutChanged`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#onfocusedinputlayoutchanged "Direct link to onfocusedinputlayoutchanged")
+
+A callback function which is fired when layout of focused input gets changed.
+
+### `onFocusedInputTextChanged`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#onfocusedinputtextchanged "Direct link to onfocusedinputtextchanged")
+
+A callback function which is fired every time when user changes a text (types/deletes symbols).
+
+### `onFocusedInputSelectionChanged`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#onfocusedinputselectionchanged "Direct link to onfocusedinputselectionchanged")
+
+A callback function which is fired when user selects text in focused input.
+
+### `statusBarTranslucent`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#statusbartranslucent- "Direct link to statusbartranslucent-")
+
+A boolean prop to indicate whether `StatusBar` should be translucent on `Android` or not.
+
+### `navigationBarTranslucent`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#navigationbartranslucent- "Direct link to navigationbartranslucent-")
+
+A boolean prop to indicate whether [NavigationBar](https://m2.material.io/design/platform-guidance/android-bars.html#android-navigation-bar) should be translucent on `Android` or not.
+
+### `preserveEdgeToEdge`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#preserveedgetoedge- "Direct link to preserveedgetoedge-")
+
+A boolean property indicating whether to keep [edge-to-edge](https://developer.android.com/develop/ui/views/layout/edge-to-edge) mode always enabled (even when you disable the module). This is useful if you are using an external library to enable it and don't want this library to disable it.
+
+### `enabled`[​](/react-native-keyboard-controller/docs/api/views/keyboard-controller-view.md#enabled "Direct link to enabled")
+
+A boolean prop indicating whether the view is active or not. If it's `true` then it moves application to [edge-to-edge](https://developer.android.com/training/gestures/edge-to-edge) mode on Android and setup keyboard callbacks. When `false` - moves app away from [edge-to-edge](https://developer.android.com/training/gestures/edge-to-edge) and removes keyboard listeners.
+
+
+---
+
+# KeyboardExtender
+
+<!-- -->
+
+The `KeyboardExtend` component allows you to extend the keyboard with your own UI that extends the keyboard (i. e. literally increasing its height) moves and matches its appearance.
+
+## `KeyboardStickyView` vs `KeyboardExtender`[​](/react-native-keyboard-controller/docs/api/views/keyboard-extender.md#keyboardstickyview-vs-keyboardextender "Direct link to keyboardstickyview-vs-keyboardextender")
+
+While both components serve similar purposes they are intended for different use cases. Below is the table that can help you to decide which component to use:
+
+| Feature                       | KeyboardExtender | KeyboardStickyView |
+| ----------------------------- | ---------------- | ------------------ |
+| Matches keyboard design       | ✅               | ❌                 |
+| Is part of the keyboard       | ✅               | ❌                 |
+| Hides when keyboard is hidden | ✅               | ❌                 |
+| Increases keyboard height     | ✅               | ❌                 |
+
+## Features[​](/react-native-keyboard-controller/docs/api/views/keyboard-extender.md#features "Direct link to Features")
+
+* ✅ **Automatically attaches** to all `TextInput`s when enabled
+* 📏 **Automatically calculates its height** based on content
+* 🎯 **Moves with the keyboard animation**
+* 🎨 **Matches the keyboard UI** for seamless integration
+* 🎭 **Renders as if it's part of the keyboard**
+
+## Props[​](/react-native-keyboard-controller/docs/api/views/keyboard-extender.md#props "Direct link to Props")
+
+### `enabled`[​](/react-native-keyboard-controller/docs/api/views/keyboard-extender.md#enabled "Direct link to enabled")
+
+A boolean prop indicating whether the component is enabled or disabled. If it's `true`, the component attaches to the keyboard. If it's `false`, it detaches.
+
+## Usage[​](/react-native-keyboard-controller/docs/api/views/keyboard-extender.md#usage "Direct link to Usage")
+
+```
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Alert,
+  Keyboard,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
+import {
+  KeyboardExtender,
+  useKeyboardState,
+} from "react-native-keyboard-controller";
+import Reanimated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+export default function KeyboardExtendExample() {
+  const appearance = useKeyboardState((state) => state.appearance);
+  const [showExtend, setShowExtend] = useState(true);
+  const opacity = useSharedValue(1);
+
+  useEffect(() => {
+    opacity.set(withTiming(showExtend ? 1 : 0));
+  }, [showExtend]);
+
+  const animatedStyle = useAnimatedStyle(
+    () => ({
+      opacity: opacity.value,
+    }),
+    [],
+  );
+  const textStyle = useMemo(
+    () => [
+      styles.priceText,
+      appearance === "light"
+        ? styles.lightKeyboardText
+        : styles.darkKeyboardText,
+    ],
+    [appearance],
+  );
+
+  return (
+    <>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <SafeAreaView edges={["top"]} style={styles.container}>
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Donation amount"
+            placeholderTextColor="#5c5c5c"
+            style={styles.input}
+            onFocus={() => setShowExtend(true)}
+          />
+          <TextInput
+            keyboardType="numeric"
+            placeholder="Postal code"
+            placeholderTextColor="#5c5c5c"
+            style={styles.input}
+            onFocus={() => setShowExtend(false)}
+          />
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+      <KeyboardExtender enabled={showExtend}>
+        <Reanimated.View style={[styles.keyboardExtend, animatedStyle]}>
+          <TouchableOpacity onPress={() => Alert.alert("10 dollars")}>
+            <Text style={textStyle}>10$</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Alert.alert("20 dollars")}>
+            <Text style={textStyle}>20$</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Alert.alert("50 dollars")}>
+            <Text style={textStyle}>50$</Text>
+          </TouchableOpacity>
+        </Reanimated.View>
+      </KeyboardExtender>
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  background: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1,
+    width: "100%",
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    backgroundColor: "#ffffff",
+  },
+  input: {
+    height: 40,
+    borderWidth: 2,
+    borderColor: "#1c1c1c",
+    borderRadius: 8,
+    padding: 10,
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  keyboardExtend: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  priceText: {
+    fontSize: 18,
+    fontWeight: "600",
+    padding: 20,
+  },
+  lightKeyboardText: {
+    color: "black",
+  },
+  darkKeyboardText: {
+    color: "white",
+  },
+});
+```
+
+## Limitations[​](/react-native-keyboard-controller/docs/api/views/keyboard-extender.md#limitations "Direct link to Limitations")
+
+* You can not put `TextInput` inside `KeyboardExtender`. Consider to use [KeyboardBackgroundView](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md) + [KeyboardStickyView](/react-native-keyboard-controller/docs/api/components/keyboard-sticky-view.md) instead.
+
+
+---
+
+# KeyboardGestureArea
+
+`KeyboardGestureArea` allows you to define a region on the screen, where gestures will control the keyboard position.
+
+Platform availability
+
+This component is available only for Android >= 11. For Android < 11 it will render `React.Fragment`.
+
+## Props[​](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#props "Direct link to Props")
+
+### `offset`[​](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#offset "Direct link to offset")
+
+Extra distance to the keyboard. Default is `0`.
+
+### `interpolator`[​](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#interpolator- "Direct link to interpolator-")
+
+String with possible values `linear` and `ios`:
+
+* **ios** - interactive keyboard dismissing will work as in iOS: swipes in non-keyboard area will not affect keyboard positioning, but if your swipe touches keyboard - keyboard will follow finger position.
+* **linear** - gestures inside the component will linearly affect the position of the keyboard, i.e. if the user swipes down by 20 pixels, then the keyboard will also be moved down by 20 pixels, even if the gesture was not made over the keyboard area.
+
+### `showOnSwipeUp`[​](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#showonswipeup- "Direct link to showonswipeup-")
+
+A boolean prop which allows to customize interactive keyboard behavior. If set to `true` then it allows to show keyboard (if it's already closed) by swipe up gesture. `false` by default.
+
+### `enableSwipeToDismiss`[​](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#enableswipetodismiss- "Direct link to enableswipetodismiss-")
+
+A boolean prop which allows to customize interactive keyboard behavior. If set to `false`, then any gesture will not affect keyboard position if the keyboard is shown. `true` by default.
+
+### `textInputNativeID`[​](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#textinputnativeid- "Direct link to textinputnativeid-")
+
+A corresponding `nativeID` value from the associated `TextInput` (a string that links the `KeyboardGestureArea` to one or more `TextInput` components). This is **required on iOS** in order to apply the `offset` when the keyboard is shown. Only the currently focused `TextInput` with a matching `nativeID` will receive offset behavior:
+
+* To apply the offset behavior to **multiple inputs**, you must assign the same `nativeID` to each of them.
+* If no `textInputNativeID` is provided, `offset` behavior will not be applied.
+
+## Example[​](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#example "Direct link to Example")
+
+```
+<KeyboardGestureArea
+  interpolator="ios"
+  offset={50}
+  textInputNativeID="composer"
+>
+  <ScrollView keyboardDismissMode="interactive">
+    {/* The other UI components of application in your tree */}
+  </ScrollView>
+  <TextInput nativeID="composer" />
+</KeyboardGestureArea>
+```
+
+To see full example, check out corresponding [ios](https://github.com/kirillzyusko/react-native-keyboard-controller/tree/main/example/src/screens/Examples/InteractiveKeyboardIOS/index.tsx) and [android](https://github.com/kirillzyusko/react-native-keyboard-controller/tree/main/example/src/screens/Examples/InteractiveKeyboard/index.tsx) examples.
+
+
+---
 
 # OverKeyboardView
 
@@ -1980,13 +2488,13 @@ Unlike `Modal` component the `OverKeyboardView` is not supposed to have too many
 
 By default it is transparent, it stretches to **full screen** without **any animation** (i. e. `animationType`, `presentationStyle`, `statusBarTranslucent`, `transparent` properties will not be supported). To support effect of these properties you can use third party libraries like `react-native-reanimated` to create custom animations, `react-native-safe-area-context` to handle safe area insets, etc.
 
-## Props[​](/react-native-keyboard-controller/docs/api/over-keyboard-view.md#props "Direct link to Props")
+## Props[​](/react-native-keyboard-controller/docs/api/views/over-keyboard-view.md#props "Direct link to Props")
 
-### `visible`[​](/react-native-keyboard-controller/docs/api/over-keyboard-view.md#visible "Direct link to visible")
+### `visible`[​](/react-native-keyboard-controller/docs/api/views/over-keyboard-view.md#visible "Direct link to visible")
 
 A boolean prop indicating whether the view is visible or not. If it's `true` then view is shown on the screen. If it's `false` then view is hidden.
 
-## Example[​](/react-native-keyboard-controller/docs/api/over-keyboard-view.md#example "Direct link to Example")
+## Example[​](/react-native-keyboard-controller/docs/api/views/over-keyboard-view.md#example "Direct link to Example")
 
 ```
 import React, { useState } from "react";
@@ -2063,20 +2571,33 @@ const styles = StyleSheet.create({
 
 ---
 
-## API Reference
+## [📄️<!-- --> <!-- -->KeyboardAvoidingView](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md)
 
-> API reference containing information about all public methods and their signatures
-
-## [🗃️<!-- --> <!-- -->🎣 Hooks](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-animation.md)
-
-[3 items](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-animation.md)
+[This component will automatically adjust its height, position, or bottom padding based on the keyboard height to remain visible while the virtual keyboard is displayed.](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md)
 
 
 ---
 
-## Guides
+## [🗃️<!-- --> <!-- -->⌨️ Keyboard](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-animation.md)
 
-> Most useful topics to start quickly.
+[4 items](/react-native-keyboard-controller/docs/api/hooks/keyboard/use-keyboard-animation.md)
+
+
+---
+
+## [📄️<!-- --> <!-- -->OverKeyboardView](/react-native-keyboard-controller/docs/api/views/over-keyboard-view.md)
+
+[Display views over keyboard without closing it.](/react-native-keyboard-controller/docs/api/views/over-keyboard-view.md)
+
+
+---
+
+## [🗃️<!-- --> <!-- -->🎣 Hooks](/react-native-keyboard-controller/docs/category/-hooks.md)
+
+[3 items](/react-native-keyboard-controller/docs/category/-hooks.md)
+
+
+---
 
 ## [📄️<!-- --> <!-- -->First animation](/react-native-keyboard-controller/docs/guides/first-animation.md)
 
@@ -2085,18 +2606,12 @@ const styles = StyleSheet.create({
 
 ---
 
-## Recipes
-
 ## [📄️<!-- --> <!-- -->Architecture](/react-native-keyboard-controller/docs/recipes/architecture.md)
 
 [This library requires to wrap an app with KeyboardProvider component. It's needed because it stores animated values in context.](/react-native-keyboard-controller/docs/recipes/architecture.md)
 
 
 ---
-
-## FAQ
-
-> Frequently asked questions and answers on them
 
 # FAQ
 
@@ -2108,10 +2623,6 @@ If you want to know the difference between `useAnimatedKeyboard` and the impleme
 
 
 ---
-
-## Building own hook
-
-> Default hooks may not perfectly fit in your app, because it changes/restores softInputMode on mount/unmount of the component where it's used.
 
 # Building own hook
 
@@ -2158,10 +2669,6 @@ In this case when screen becomes invisible hook will restore default `softInputM
 
 ---
 
-## Compatibility
-
-> Compatibility of library with different react-native versions and architectures
-
 # Compatibility
 
 info
@@ -2180,6 +2687,7 @@ Below you can find a table with supported versions:
 
 | library version | react-native version |
 | --------------- | -------------------- |
+| 1.18.0+         | 0.81.0+              |
 | 1.16.0+         | 0.77.0+              |
 | 1.13.0+         | 0.75.0+              |
 | 1.12.0+         | 0.74.0+              |
@@ -2216,10 +2724,6 @@ If you know other 3rd party libraries that may be using deprecated API, please o
 
 
 ---
-
-## Components Overview
-
-> Overview and comparison of view and components available in this package
 
 # Components Overview
 
@@ -2264,11 +2768,37 @@ To enhance the usability of forms with multiple `TextInput` fields, consider `Ke
 
 A major benefit is its use of the library's native focus control logic (`KeyboardController.setFocusTo`), simplifying development by handling the complexities of switching focus between inputs for you. It's highly customizable in appearance and behavior, allowing seamless integration into your app's design.
 
-## [`OverKeyboardView`](/react-native-keyboard-controller/docs/api/over-keyboard-view.md)[​](/react-native-keyboard-controller/docs/guides/components-overview.md#overkeyboardview "Direct link to overkeyboardview")
+## [`OverKeyboardView`](/react-native-keyboard-controller/docs/api/views/over-keyboard-view.md)[​](/react-native-keyboard-controller/docs/guides/components-overview.md#overkeyboardview "Direct link to overkeyboardview")
 
 `OverKeyboardView` offers a unique capability: it allows you to render any React Native view *on top* of both your application UI *and* the virtual keyboard, crucially *without* causing the keyboard to be dismissed. This is ideal for creating experiences where supplementary UI elements, like context menu can appear.
 
 Its key difference from a standard `Modal` is precisely this ability to keep the keyboard open and active, enabling more seamless keyboard-centric interactions. Its usage is straightforward, primarily controlled via the `visible` boolean prop.
+
+## [`KeyboardExtender`](/react-native-keyboard-controller/docs/api/views/keyboard-extender.md)[​](/react-native-keyboard-controller/docs/guides/components-overview.md#keyboardextender "Direct link to keyboardextender")
+
+`KeyboardExtender` allows you to render custom content *inside* the keyboard area — literally extending the keyboard with your own UI. Unlike views that float or move with the keyboard, this component integrates visually and functionally *as part of the keyboard itself*.
+
+It's perfect for adding quick action buttons or other custom input helpers directly above the system keyboard. The extender matches the native keyboard animation and hides automatically when the keyboard dismisses.
+
+Use the `enabled` prop to toggle its activation based on `TextInput` focus, and note that it **cannot contain other `TextInput`s** inside.
+
+## [`KeyboardBackgroundView`](/react-native-keyboard-controller/docs/api/views/keyboard-background-view.md)[​](/react-native-keyboard-controller/docs/guides/components-overview.md#keyboardbackgroundview "Direct link to keyboardbackgroundview")
+
+`KeyboardBackgroundView` is a low-level utility component that replicates the **visual background of the system keyboard**. It doesn’t extend behind the keyboard or modify layout — instead, it lets you **match your UI’s design to the keyboard’s background**, making transitions feel more native and polished.
+
+This component is particularly useful when you want to:
+
+* **Blend your UI with the system keyboard’s look**, ensuring color and tone consistency across transitions.
+* Create **smooth visual experiences**, like a toolbar or floating panel that appears visually anchored to the keyboard.
+* Implement designs with **shared visual surfaces**, such as search interfaces or context panels, that remain visually connected during keyboard presentation.
+
+`KeyboardBackgroundView` is typically used alongside components like `KeyboardStickyView`, where keeping a consistent background color between your UI and the keyboard enhances the illusion of a single continuous surface.
+
+It’s not meant to manage layout, respond to keyboard events, or overlay content — its sole purpose is **visual alignment**.
+
+tip
+
+Use this when you want your UI to feel like it shares the same visual space as the system keyboard — particularly helpful for sticky toolbars, soft shadows, or themed transitions.
 
 ## Quick Reference Table[​](/react-native-keyboard-controller/docs/guides/components-overview.md#quick-reference-table "Direct link to Quick Reference Table")
 
@@ -2279,6 +2809,8 @@ Its key difference from a standard `Modal` is precisely this ability to keep the
 | `KeyboardAwareScrollView` | Scrolls content to focused input           | ✅ (scroll position)       | Large Scrollable Forms/Lists | Auto-scrolls within ScrollView, respects native animation |
 | `KeyboardToolbar`         | Adds Nav/Done buttons, sticks to keyboard  | ❌ (it's sticky)           | Multi-Input Forms            | Provides UI + native logic for input navigation/dismissal |
 | `OverKeyboardView`        | Displays content *over* the keyboard       | ❌ (overlays content)      | Menus, Modals over keyboard  | Keeps keyboard open while showing overlay content         |
+| `KeyboardExtender`        | Displays the content inside the keyboard   | ❌ (moves with keyboard)   | Quick actions, shortcuts     | Appears as part of keyboard, matches animation & style    |
+| `KeyboardBackgroundView`  | Matches keyboard background color          | ❌ (visual only)           | Visual Blending/Transitions  | Synchronizes color with keyboard for seamless UI effects  |
 
 ## Which Component Should You Use?[​](/react-native-keyboard-controller/docs/guides/components-overview.md#which-component-should-you-use "Direct link to Which Component Should You Use?")
 
@@ -2289,15 +2821,13 @@ Here's a simple guide to choosing:
 * For **scrollable screens containing multiple inputs** (like forms or long lists), `KeyboardAwareScrollView` will handle keeping the focused input visible automatically.
 * To add standard **"Previous/Next/Done" navigation buttons** to your forms, `KeyboardToolbar` offers a convenient and customizable solution.
 * When you need to display **contextual content like suggestions or menus over an active keyboard** without dismissing it, `OverKeyboardView` provides this unique capability.
+* If you want to **extend the keyboard with your own UI**, such as quick actions or input helpers that appear *inside* the keyboard area, use `KeyboardExtender`.
+* If you're aiming for **visual consistency between your UI and the keyboard background** — for example, to blend a panel into the keyboard area — `KeyboardBackgroundView` helps match system colors for a polished, seamless effect.
 
 This library offers specialized tools for common keyboard challenges in React Native. Choose the one that best fits your UI need.
 
 
 ---
-
-## First animation
-
-> To build your first animation you will need to use two hooks: useKeyboardAnimation or useReanimatedKeyboardAnimation.
 
 # First animation
 
@@ -2376,10 +2906,6 @@ If you are going to use these Animated values in class components (i.e. without 
 
 ---
 
-## Interactive Keyboard
-
-> This guide focuses on adding an ability to dismiss keyboard interactively. Below you can see a step by step guide which will explain how different pieces of the code work together.
-
 # Interactive Keyboard
 
 This guide focuses on adding an ability to dismiss keyboard interactively. Below you can see a step by step guide which will explain how different pieces of the code work together.
@@ -2400,7 +2926,7 @@ First of all let's consider a simple example and layout for typical chat applica
 
 ### Adding `KeyboardGestureArea`[​](/react-native-keyboard-controller/docs/guides/interactive-keyboard.md#adding-keyboardgesturearea "Direct link to adding-keyboardgesturearea")
 
-To make interactive dismissing work on Android we need to add `KeyboardGestureArea` view. This view will track all gestures and will control the keyboard positioning. To customize the way how the keyboard will be dismissed you can specify `interpolator` [prop](/react-native-keyboard-controller/docs/api/keyboard-gesture-area.md#interpolator-).
+To make interactive dismissing work on Android we need to add `KeyboardGestureArea` view. This view will track all gestures and will control the keyboard positioning. To customize the way how the keyboard will be dismissed you can specify `interpolator` [prop](/react-native-keyboard-controller/docs/api/views/keyboard-gesture-area.md#interpolator-).
 
 In order to recognize all gestures on a `ScrollView` we need to wrap a `ScrollView` within `KeyboardGestureArea`:
 
@@ -2441,10 +2967,6 @@ To see full examples of interactive keyboard handling you may have a look on cor
 
 ---
 
-## Installation
-
-> Guide dedicated to installation process
-
 # Installation
 
 ## Adding a library to the project[​](/react-native-keyboard-controller/docs/installation.md#adding-a-library-to-the-project "Direct link to Adding a library to the project")
@@ -2466,10 +2988,6 @@ npm install react-native-keyboard-controller --save
 ```
 npx expo install react-native-keyboard-controller
 ```
-
-Only Expo Dev client compatible
-
-This library has native code, so it **does not work** with *Expo Go* but it's fully compatible with [custom dev client](https://docs.expo.dev/development/getting-started/).
 
 Mandatory `react-native-reanimated` dependency
 
@@ -2507,16 +3025,18 @@ export default function App() {
 
 Congratulations! 🎉 You've just finished installation process. Go to the [next section](/react-native-keyboard-controller/docs/guides/first-animation.md) to get more insights of what you can do using this library. 😎
 
+Flickering keyboard on app start
+
+`KeyboardProvider` preloads the keyboard when the app starts to avoid an initial delay later. However, in some situations, this may cause the keyboard to [briefly appear](https://github.com/kirillzyusko/react-native-keyboard-controller/issues/1077) on launch.
+
+To prevent this, disable preloading by setting the [`preload={false}`](/react-native-keyboard-controller/docs/api/keyboard-provider.md#preload-) prop on `KeyboardProvider`. And don't forget to manually [`preload`](/react-native-keyboard-controller/docs/api/keyboard-controller.md#preload-) the keyboard later via `KeyboardController` when appropriate.
+
 Troubleshooting guide
 
 If you encounter some issues make sure to read the [Troubleshooting](/react-native-keyboard-controller/docs/troubleshooting.md) section.
 
 
 ---
-
-## Architecture
-
-> This library requires to wrap an app with KeyboardProvider component. It's needed because it stores animated values in context.
 
 # Architecture
 
@@ -2578,10 +3098,6 @@ To sum it up:
 
 
 ---
-
-## Jest testing guide
-
-> A testing-guide showing how to write unit-tests using jest
 
 # Jest testing guide
 
@@ -2650,10 +3166,6 @@ describe("basic keyboard interaction", () => {
 
 ---
 
-## Platforms capabilities and limitations
-
-> This library relies on WindowInsetsCompat API on Android and keyboard listeners (NotificationCenter) on iOS.
-
 # Platforms capabilities and limitations
 
 This library relies on `WindowInsetsCompat` API on `Android` and keyboard listeners (`NotificationCenter`) on iOS.
@@ -2680,10 +3192,6 @@ If you are animating non UI props (such as `width`, `height`, etc.) and you need
 
 
 ---
-
-## Troubleshooting
-
-> Troubleshooting guide
 
 # Troubleshooting
 
@@ -2785,12 +3293,13 @@ If you experience this error on Windows you need to perform next steps:
    import org.apache.tools.ant.taskdefs.condition.Os
 
    externalNativeBuild {
-       cmake {
-           def cmakeDir = "${android.sdkDirectory}/cmake/3.31.1/bin"
-           def ninjaExecutable = Os.isFamily(Os.FAMILY_WINDOWS) ? "ninja.exe" : "ninja"
-           def ninjaPath = "${cmakeDir}/${ninjaExecutable}".replace("\\", "/")
-           arguments "-DCMAKE_MAKE_PROGRAM=${ninjaPath}",
-                      "-DCMAKE_OBJECT_PATH_MAX=1024"
+      cmake {
+         def cmakeDir = "${android.sdkDirectory}/cmake/3.31.1/bin"
+         def ninjaExecutable = Os.isFamily(Os.FAMILY_WINDOWS) ? "ninja.exe" : "ninja"
+         def ninjaPath = "${cmakeDir}/${ninjaExecutable}".replace("\\", "/")
+
+         arguments "-DCMAKE_MAKE_PROGRAM=${ninjaPath}",
+                   "-DCMAKE_OBJECT_PATH_MAX=1024"
       }
    }
    ```
@@ -2809,10 +3318,6 @@ If you experience this error on Windows you need to perform next steps:
 
 
 ---
-
-## Keyboard Controller
-
-> Control each frame of keyboard movement in react native
 
 ### Track each keyboard frame
 

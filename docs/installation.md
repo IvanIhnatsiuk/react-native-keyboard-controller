@@ -20,10 +20,6 @@ npm install react-native-keyboard-controller --save
 npx expo install react-native-keyboard-controller
 ```
 
-Only Expo Dev client compatible
-
-This library has native code, so it **does not work** with *Expo Go* but it's fully compatible with [custom dev client](https://docs.expo.dev/development/getting-started/).
-
 Mandatory `react-native-reanimated` dependency
 
 This library requires `react-native-reanimated` to work properly. If you don't have it in your project, you need to follow [installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/#installation) and install it in your project before using this library.
@@ -59,6 +55,12 @@ export default function App() {
 ```
 
 Congratulations! 🎉 You've just finished installation process. Go to the [next section](/react-native-keyboard-controller/docs/guides/first-animation.md) to get more insights of what you can do using this library. 😎
+
+Flickering keyboard on app start
+
+`KeyboardProvider` preloads the keyboard when the app starts to avoid an initial delay later. However, in some situations, this may cause the keyboard to [briefly appear](https://github.com/kirillzyusko/react-native-keyboard-controller/issues/1077) on launch.
+
+To prevent this, disable preloading by setting the [`preload={false}`](/react-native-keyboard-controller/docs/api/keyboard-provider.md#preload-) prop on `KeyboardProvider`. And don't forget to manually [`preload`](/react-native-keyboard-controller/docs/api/keyboard-controller.md#preload-) the keyboard later via `KeyboardController` when appropriate.
 
 Troubleshooting guide
 
