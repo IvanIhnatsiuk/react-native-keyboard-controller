@@ -104,7 +104,11 @@ Inherits [View Props](https://reactnative.dev/docs/view#props).
 
 Specify how to react to the presence of the keyboard. Could be one value of:
 
-* `translate-with-padding` - Combines **translation** (moves the view up) with **paddingTop** that gets applied only once per animation. As a result this mode delivers **the best** possible performance. An ideal fit for building **chat-like** apps.
+* `translate-with-padding` - Combines **translation** (moves the view up) with **paddingTop** that gets applied only once per animation. As a result this mode delivers **the best** possible performance. It is commonly used in **chat-like** apps.
+
+Building a chat app?
+
+While `KeyboardAvoidingView` can be used in chat apps, it has [fundamental limitations](/react-native-keyboard-controller/docs/guides/building-chat-app.md#why-general-purpose-components-fall-short) for chat layouts. Use [`KeyboardChatScrollView`](/react-native-keyboard-controller/docs/api/components/keyboard-chat-scroll-view.md) component that was designed to avoid these limitations.
 
 * `padding` - the most commonly used mode. It moves the view up by the height of the keyboard and applies `paddingBottom` to the content container. Use `padding` mode when you have a `ScrollView` or `flex-based` layouts that should remain visible.
 
@@ -123,6 +127,10 @@ A boolean prop indicating whether `KeyboardAvoidingView` is enabled or disabled.
 ### `keyboardVerticalOffset`[​](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md#keyboardverticaloffset "Direct link to keyboardverticaloffset")
 
 This is the distance between the top of the user screen and the react native view. This is particularly useful when there are fixed headers, navigation bars, or other UI elements at the top of the screen. Default is `0`.
+
+By default the view uses parent-relative coordinates from `onLayout`, so you typically need to set this to the height of your navigation header (e.g., pass `useHeaderHeight()` from `@react-navigation/elements`).
+
+If you enable [`automaticOffset`](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md#automaticoffset), the view automatically detects its position on screen, and `keyboardVerticalOffset` becomes purely **additive** extra space — you no longer need to compensate for navigation headers or modals.
 
 <!-- -->
 
@@ -152,7 +160,7 @@ const MyScreen = () => {
 
 * **Custom Toolbars or Fixed Elements at the Top** - If your app has a fixed toolbar, status bar, or other UI elements at the top, you should offset accordingly.
 
-* **Modal Screens with Different Layouts** - When using `KeyboardAvoidingView` inside a `Modal`, you may need to manually define the vertical offset to account for the modal’s positioning.
+* **Modal Screens with Different Layouts** - When using `KeyboardAvoidingView` inside a `Modal`, you may need to manually define the vertical offset to account for the modal's positioning. Alternatively, consider using [`automaticOffset`](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md#automaticoffset) which handles modals automatically.
 
 Below shown a visual representation of `keyboardVerticalOffset`:
 
@@ -160,11 +168,35 @@ Handling `StatusBar` height on Android with `useHeaderHeight`
 
 On `Android`, how you handle the `StatusBar` height depends on whether the `StatusBar` is **translucent** or **not**:
 
-* **If the `StatusBar` is translucent**, `react-navigation` **automatically includes the `StatusBar` height** in `useHeaderHeight()`, along with safe-area padding. This behavior aligns with iOS, so you don’t need to manually add the `StatusBar` height.
+* **If the `StatusBar` is translucent**, `react-navigation` **automatically includes the `StatusBar` height** in `useHeaderHeight()`, along with safe-area padding. This behavior aligns with iOS, so you don't need to manually add the `StatusBar` height.
 * **If the StatusBar is not translucent**, `useHeaderHeight()` does **not** include the `StatusBar` height. In this case, you need to add it manually:
 
 ```
 const headerHeight = useHeaderHeight() + (StatusBar.currentHeight ?? 0);
 ```
 
-Since `StatusBar.currentHeight` is an **Android-only** property, using `?? 0` ensures it doesn’t cause issues on iOS. This approach avoids the need for `Platform.OS` or `Platform.select` checks.
+Since `StatusBar.currentHeight` is an **Android-only** property, using `?? 0` ensures it doesn't cause issues on iOS. This approach avoids the need for `Platform.OS` or `Platform.select` checks.
+
+### `automaticOffset`[​](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md#automaticoffset "Direct link to automaticoffset")
+
+When `true`, the view automatically detects its position on screen, accounting for navigation headers, modals, and other layout offsets. This means `keyboardVerticalOffset` becomes purely additive extra space rather than compensation for unknown positioning.
+
+Default is `false`.
+
+## Troubleshooting[​](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md#troubleshooting "Direct link to Troubleshooting")
+
+### Missing iOS animation with `translate-with-padding` behavior[​](/react-native-keyboard-controller/docs/api/components/keyboard-avoiding-view.md#missing-ios-animation-with-translate-with-padding-behavior "Direct link to missing-ios-animation-with-translate-with-padding-behavior")
+
+On iOS, updating React state right before a keyboard event can cause animations to be skipped entirely. This happens because a React commit can block Reanimated from applying its animated updates in the same frame.
+
+Common triggers include:
+
+* updating state in the `onFocus` callback of a `TextInput`;
+* updating state in response to the `keyboardWillShow` event;
+* using `KeyboardToolbar` or other components that trigger a state update before the keyboard appears.
+
+To fix this, enable the [DISABLE\_COMMIT\_PAUSING\_MECHANISM](https://docs.swmansion.com/react-native-reanimated/docs/guides/feature-flags/#disable_commit_pausing_mechanism) feature flag. See the link for detailed setup instructions.
+
+Do I need to enable this flag?
+
+This issue can occur even if the state update comes from a different screen (e.g. a parent navigator). To check, open the React Profiler and look for any React commits that happen just before the keyboard event — if you see one, you likely need this flag.

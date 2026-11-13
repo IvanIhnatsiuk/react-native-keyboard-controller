@@ -305,6 +305,26 @@ The property that allows to specify custom text for `Done` button.
 </KeyboardToolbar>
 ```
 
+### `<KeyboardToolbar.Group>`[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#keyboardtoolbargroup "Direct link to keyboardtoolbargroup")
+
+This component defines a group of inputs that form an isolated navigation region. When the user presses the prev/next arrows on `KeyboardToolbar`, the focus will only cycle through inputs **within the same group**. Inputs outside the group are not reachable from within, and inputs inside the group are not reachable from outside.
+
+This is useful for scenarios like bottom sheets, tab views, or any UI where a subset of inputs should have independent navigation.
+
+```
+<BottomSheet>
+  <KeyboardToolbar.Group>
+    <TextInput placeholder="First name" />
+    <TextInput placeholder="Last name" />
+    <TextInput placeholder="Email" />
+  </KeyboardToolbar.Group>
+</BottomSheet>
+```
+
+Toolbar button state
+
+When a grouped input is focused, the toolbar's prev/next buttons reflect the position within that group (not the global list of inputs). For example, the "prev" button will be disabled when focused on the first input of a group.
+
 ## Props[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#props "Direct link to Props")
 
 ### [`View Props`](https://reactnative.dev/docs/view#props)[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#view-props "Direct link to view-props")
@@ -586,5 +606,18 @@ If you found any bugs or inconsistent behavior comparing to old implementation a
 
 ## Limitations[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#limitations "Direct link to Limitations")
 
-* By default `TextInput` search happens within `UIViewController`/`FragmentActivity` (current screen if you are using `react-native-screens`)
 * The order of the navigation is defined by the view hierarchy (commonly referred to as the view-tree).
+
+## Troubleshooting[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#troubleshooting "Direct link to Troubleshooting")
+
+### Missing animations on iOS (new arch only)[​](/react-native-keyboard-controller/docs/api/components/keyboard-toolbar.md#missing-animations-on-ios-new-arch-only "Direct link to Missing animations on iOS (new arch only)")
+
+Starting with version `1.21.7`, `KeyboardToolbar` uses the Reanimated-based `KeyboardStickyView` for its `translateY` animation. The toolbar also updates React state when the focused input changes. On iOS (New Architecture only), that React commit can block Reanimated from applying its animated updates in the same frame, causing the toolbar animation to be skipped entirely.
+
+The same issue can occur when your app updates state in an `onFocus` callback, in response to the `keyboardWillShow` event, or anywhere else immediately before the keyboard event.
+
+To fix this, enable the [DISABLE\_COMMIT\_PAUSING\_MECHANISM](https://docs.swmansion.com/react-native-reanimated/docs/guides/feature-flags/#disable_commit_pausing_mechanism) feature flag. See the link for detailed setup instructions.
+
+Do I need to enable this flag?
+
+This issue can occur even if the state update comes from a different screen (e.g. a parent navigator). To check, open the React Profiler and look for any React commits that happen just before the keyboard event — if you see one, you likely need this flag.
